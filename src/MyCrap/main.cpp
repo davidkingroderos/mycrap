@@ -214,14 +214,27 @@ int main()
 
 		glActiveTexture(GL_TEXTURE0);
 
-		glBindTexture(GL_TEXTURE_2D, textures[0]);
-		glDrawArrays(GL_TRIANGLES, 0, 24);
+		int chunkSize = 16;
+		for (int i = 0; i < chunkSize; i++)
+		{
+			for (int j = 0; j < chunkSize; j++)
+			{
+				glm::mat4 model = glm::mat4(1.0f);
+				model = glm::translate(model, glm::vec3(static_cast<float>(i), 0.0f, static_cast<float>(j)));
 
-		glBindTexture(GL_TEXTURE_2D, textures[1]);
-		glDrawArrays(GL_TRIANGLES, 24, 6);
+				shader.setMat4("model", model);
 
-		glBindTexture(GL_TEXTURE_2D, textures[2]);
-		glDrawArrays(GL_TRIANGLES, 30, 6);
+				glBindTexture(GL_TEXTURE_2D, textures[0]);
+				glDrawArrays(GL_TRIANGLES, 0, 24);
+
+				glBindTexture(GL_TEXTURE_2D, textures[1]);
+				glDrawArrays(GL_TRIANGLES, 24, 6);
+
+				glBindTexture(GL_TEXTURE_2D, textures[2]);
+				glDrawArrays(GL_TRIANGLES, 30, 6);
+			}
+		}
+
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
