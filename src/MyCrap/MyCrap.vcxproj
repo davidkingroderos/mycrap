@@ -158,6 +158,12 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="dirt.jpg" />
+    <Image Include="grass.jpg" />
+    <Image Include="sidegrass.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="frag.shader" />
+    <None Include="vert.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -58,6 +58,15 @@ int main()
 		return -1;
 	}
 
+	Shader dirtShader("vert.shader", "frag.shader");
+
+	float cube[] = {
+		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,
+		 0.5f, -0.5f,  0.5f,  
+		-0.5f,  0.5f,  0.5f, 
+		 0.5f,  0.5f,  0.5f,
+	};
+
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
@@ -68,6 +77,7 @@ int main()
 
 	glfwTerminate();
 }
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);

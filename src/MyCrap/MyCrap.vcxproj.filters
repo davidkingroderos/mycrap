@@ -40,5 +40,19 @@
     <Image Include="dirt.jpg">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="sidegrass.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="grass.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vert.shader">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="frag.shader">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
