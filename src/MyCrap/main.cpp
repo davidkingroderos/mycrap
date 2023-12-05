@@ -18,10 +18,10 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
 
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1920;
+const unsigned int SCR_HEIGHT = 1080;
 
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(0.0f, 0.0f, 20.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -37,7 +37,7 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "My Crap", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "My Crap", glfwGetPrimaryMonitor(), NULL);
 
 	if (window == NULL)
 	{
@@ -215,26 +215,43 @@ int main()
 		glActiveTexture(GL_TEXTURE0);
 
 		int chunkSize = 16;
+		int chunkHeight = 10;
 		for (int i = 0; i < chunkSize; i++)
 		{
 			for (int j = 0; j < chunkSize; j++)
 			{
-				glm::mat4 model = glm::mat4(1.0f);
-				model = glm::translate(model, glm::vec3(static_cast<float>(i), 0.0f, static_cast<float>(j)));
+				for (int k = 0; k < chunkHeight; k++)
+				{
+					glm::mat4 model = glm::mat4(1.0f);
+					model = glm::translate(model, glm::vec3(static_cast<float>(i), static_cast<float>(k), static_cast<float>(j)));
 
-				shader.setMat4("model", model);
+					shader.setMat4("model", model);
 
-				glBindTexture(GL_TEXTURE_2D, textures[0]);
-				glDrawArrays(GL_TRIANGLES, 0, 24);
+					glBindTexture(GL_TEXTURE_2D, textures[0]);
 
-				glBindTexture(GL_TEXTURE_2D, textures[1]);
-				glDrawArrays(GL_TRIANGLES, 24, 6);
+					if (j == chunkSize - 1)
+						glDrawArrays(GL_TRIANGLES, 0, 6);
+					if (j == 0)
+						glDrawArrays(GL_TRIANGLES, 6, 6);
+					if (i == 0)
+						glDrawArrays(GL_TRIANGLES, 12, 6);
+					if (i == chunkSize - 1)
+						glDrawArrays(GL_TRIANGLES, 18, 6);
 
-				glBindTexture(GL_TEXTURE_2D, textures[2]);
-				glDrawArrays(GL_TRIANGLES, 30, 6);
+					if (k == chunkHeight - 1)
+					{
+						glBindTexture(GL_TEXTURE_2D, textures[1]);
+						glDrawArrays(GL_TRIANGLES, 24, 6);
+					}
+					
+					if (k == 0) 
+					{
+						glBindTexture(GL_TEXTURE_2D, textures[2]);
+						glDrawArrays(GL_TRIANGLES, 30, 6);
+					}
+				}
 			}
 		}
-
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
