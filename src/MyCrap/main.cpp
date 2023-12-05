@@ -49,6 +49,10 @@ int main()
 
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetCursorPosCallback(window, mouse_callback);
+	glfwSetScrollCallback(window, scroll_callback);
+
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
@@ -112,6 +116,10 @@ int main()
 
 	while (!glfwWindowShouldClose(window))
 	{
+		float currentFrame = static_cast<float>(glfwGetTime());
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
 		processInput(window);
 
 		glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
@@ -121,6 +129,12 @@ int main()
 		glBindTexture(GL_TEXTURE_2D, textures[0]);
 
 		shader.use();
+
+		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+		shader.setMat4("projection", projection);
+
+		glm::mat4 view = camera.GetViewMatrix();
+		shader.setMat4("view", view);
 
 		glBindVertexArray(VAO);
 
