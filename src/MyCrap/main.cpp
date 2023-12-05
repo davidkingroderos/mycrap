@@ -62,6 +62,8 @@ int main()
 		return -1;
 	}
 
+	glEnable(GL_DEPTH_TEST);
+
 	Shader shader("vert.shader", "frag.shader");
 
 	float cube[] = {
@@ -69,6 +71,27 @@ int main()
 		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,
 		 0.5f,  0.5f,  0.5f,  1.0f,  1.0f,
 		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f,  1.0f,
+
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f,  1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f,  1.0f,
+
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,
+		-0.5f,  0.5f,  0.5f,  1.0f,  1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f,
+		-0.5f, -0.5f,  0.5f,  1.0f,  0.0f,
+		-0.5f,  0.5f,  0.5f,  1.0f,  1.0f,
+
+		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f,  1.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f,
 		 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,
 		 0.5f,  0.5f,  0.5f,  1.0f,  1.0f,
 	};
@@ -123,7 +146,7 @@ int main()
 		processInput(window);
 
 		glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textures[0]);
@@ -138,7 +161,7 @@ int main()
 
 		glBindVertexArray(VAO);
 
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glDrawArrays(GL_TRIANGLES, 0, 24);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
