@@ -1,2 +1,2 @@
 # mycrap
-My crappy version of Minecraft using C/C++
+My crappy version of Minecraft
