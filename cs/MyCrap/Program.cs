@@ -10,9 +10,9 @@ namespace MyCrap
     {
         static void Main(string[] args)
         {
-            using (Game game = new(800, 600))
+            using (Window window = new(800, 600))
             {
-                game.Run();
+                window.Run();
             }
         }
     }

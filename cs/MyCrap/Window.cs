@@ -12,7 +12,7 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace MyCrap
 {
-    public class Game : GameWindow
+    public class Window : GameWindow
     {
         private float[] cube = {
         -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,
@@ -65,7 +65,7 @@ namespace MyCrap
         public int ScreenWidth { get; private set; }
         public int ScreenHeight { get; private set; }
 
-        public Game(int width, int height) : base(GameWindowSettings.Default, NativeWindowSettings.Default)
+        public Window(int width, int height) : base(GameWindowSettings.Default, NativeWindowSettings.Default)
         {
             this.CenterWindow(new Vector2i(width, height));
             ScreenWidth = width;
