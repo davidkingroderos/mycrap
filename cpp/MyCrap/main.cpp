@@ -21,7 +21,7 @@ void processInput(GLFWwindow* window);
 const unsigned int SCR_WIDTH = 1920;
 const unsigned int SCR_HEIGHT = 1080;
 
-Camera camera(glm::vec3(0.0f, 0.0f, 20.0f));
+Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -38,6 +38,7 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "My Crap", glfwGetPrimaryMonitor(), NULL);
+	//GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "My Crap", NULL, NULL);
 
 	if (window == NULL)
 	{
@@ -193,7 +194,7 @@ int main()
 
 	while (!glfwWindowShouldClose(window))
 	{
-		float currentFrame = static_cast<float>(glfwGetTime());
+		float currentFrame = static_cast<float>(glfwGetTime() * 2);
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
@@ -214,37 +215,42 @@ int main()
 
 		glActiveTexture(GL_TEXTURE0);
 
-		int chunkSize = 16;
-		int chunkHeight = 10;
-		for (int i = 0; i < chunkSize; i++)
+		int chunkLength = 1;
+		int chunkWidth = 1;
+		int chunkHeight = 1;
+		for (int i = 0; i < chunkLength; i++)
 		{
-			for (int j = 0; j < chunkSize; j++)
+			for (int j = 0; j < chunkHeight; j++)
 			{
-				for (int k = 0; k < chunkHeight; k++)
+				bool front = false;
+				for (int k = 0; k < chunkWidth; k++)
 				{
 					glm::mat4 model = glm::mat4(1.0f);
-					model = glm::translate(model, glm::vec3(static_cast<float>(i), static_cast<float>(k), static_cast<float>(j)));
+					model = glm::translate(model, glm::vec3(static_cast<float>(i), static_cast<float>(j), static_cast<float>(k)));
 
 					shader.setMat4("model", model);
 
 					glBindTexture(GL_TEXTURE_2D, textures[0]);
 
-					if (j == chunkSize - 1)
+					//if (!front)
+					//{
+					if (k == chunkWidth - 1)
+					{
 						glDrawArrays(GL_TRIANGLES, 0, 6);
-					if (j == 0)
+						front = true;
+					}
+					if (k == 0)
 						glDrawArrays(GL_TRIANGLES, 6, 6);
 					if (i == 0)
 						glDrawArrays(GL_TRIANGLES, 12, 6);
-					if (i == chunkSize - 1)
+					if (i == chunkLength - 1)
 						glDrawArrays(GL_TRIANGLES, 18, 6);
-
-					if (k == chunkHeight - 1)
+					if (j == chunkHeight - 1)
 					{
 						glBindTexture(GL_TEXTURE_2D, textures[1]);
 						glDrawArrays(GL_TRIANGLES, 24, 6);
 					}
-					
-					if (k == 0) 
+					if (j == 0)
 					{
 						glBindTexture(GL_TEXTURE_2D, textures[2]);
 						glDrawArrays(GL_TRIANGLES, 30, 6);
@@ -316,4 +322,3 @@ void processInput(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 		camera.ProcessKeyboard(DOWN, deltaTime);
 }
-
