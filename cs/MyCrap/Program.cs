@@ -8,11 +8,12 @@ namespace MyCrap
 {
     public class Program
     {
+        [Obsolete]
         static void Main(string[] args)
         {
             try
             {
-                using (Window window = new(800, 600))
+                using (Window window = new(800, 600, "David OpenTK"))
                 {
                     window.Run();
                 }
