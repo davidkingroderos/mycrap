@@ -50,7 +50,6 @@ namespace MyCrap
                 int location = GL.GetUniformLocation(Handle, key);
                 uniformLocations.Add(key, location);
             }
-
         }
 
         private static void CompileShader(int shader)

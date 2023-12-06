@@ -60,7 +60,7 @@ namespace MyCrap
 
         private int vao;
         private int vbo;
-        private int shaderProgram;
+        private Shader shader;
 
         public int ScreenWidth { get; private set; }
         public int ScreenHeight { get; private set; }
@@ -84,11 +84,6 @@ namespace MyCrap
         protected override void OnLoad()
         {
             base.OnLoad();
-        }
-
-        protected override void OnUnload()
-        {
-            base.OnUnload();
 
             vao = GL.GenVertexArray();
             vbo = GL.GenBuffer();
@@ -103,6 +98,16 @@ namespace MyCrap
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.BindVertexArray(0);
+
+            shader = new("../../../Shaders/vert.shader", "../../../Shaders/frag.shader");
+        }
+
+        protected override void OnUnload()
+        {
+            base.OnUnload();
+
+            GL.DeleteVertexArray(vao);
+            GL.DeleteBuffer(vbo);
         }
 
         protected override void OnRenderFrame(FrameEventArgs args)
@@ -111,6 +116,10 @@ namespace MyCrap
 
             GL.ClearColor(0.0f, 1.0f, 1.0f, 1.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit);
+
+            shader.Use();
+            GL.BindVertexArray(vao);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
 
             Context.SwapBuffers();
         }

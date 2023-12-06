@@ -10,9 +10,16 @@ namespace MyCrap
     {
         static void Main(string[] args)
         {
-            using (Window window = new(800, 600))
+            try
             {
-                window.Run();
+                using (Window window = new(800, 600))
+                {
+                    window.Run();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
         }
     }
