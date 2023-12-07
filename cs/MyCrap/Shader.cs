@@ -9,7 +9,6 @@ using OpenTK.Mathematics;
 
 namespace MyCrap
 {
-
     public class Shader
     {
         public int Handle { get; }
@@ -96,6 +95,7 @@ namespace MyCrap
             GL.UseProgram(Handle);
             GL.Uniform1(uniformLocations[name], data);
         }
+
         public void SetMatrix4(string name, Matrix4 data)
         {
             GL.UseProgram(Handle);

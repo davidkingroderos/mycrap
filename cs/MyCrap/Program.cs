@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenTK.Windowing.Desktop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,10 +14,10 @@ namespace MyCrap
         {
             try
             {
-                using (Window window = new(800, 600, "David OpenTK"))
-                {
-                    window.Run();
-                }
+                //using Window window = new(800, 600, "David OpenTK");
+                using Window window = new(GameWindowSettings.Default, NativeWindowSettings.Default);
+
+                window.Run();
             }
             catch (Exception ex)
             {
